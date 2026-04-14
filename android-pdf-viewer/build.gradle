@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 ext {
     bintrayRepo = 'maven'
@@ -61,5 +62,18 @@ android {
 dependencies {
     implementation 'androidx.core:core:1.17.0'
     api 'io.github.oothp:pdfium-android:1.9.5-beta01'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.itaysiteam'
+                artifactId = 'android-pdf-viewer'
+                version = '1.0.0'
+            }
+        }
+    }
 }
 
