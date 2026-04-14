@@ -57,11 +57,31 @@ android {
         abortOnError false
     }
 
+    // Register the release component so maven-publish can reference components.release
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+        }
+    }
+
 }
 
 dependencies {
     implementation 'androidx.core:core:1.17.0'
     api 'io.github.oothp:pdfium-android:1.9.5-beta01'
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.github.itaysiteam'
+                artifactId = 'android-pdf-viewer'
+                version = libraryVersion
+            }
+        }
+    }
 }
 
 
